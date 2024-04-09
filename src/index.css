@@ -1,0 +1,54 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@200..800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+    font-family: "Assistant",sans-serif;
+}
+body{
+    background-color: white;
+}
+.primaryBut{
+    padding:  0.4rem 1rem;
+    background-color: transparent;
+    border: 2px solid #e34432;
+    border-radius: 6px;
+    font-size: 18px;
+    /* color: #e34432; */
+}
+.primaryBut:hover{
+    background-color: #e34432;
+    border: 2px solid #e34432;
+    color: white;
+}
+.secondaryBut{
+    padding:  0.4rem 1rem;
+    background-color: #e34432;
+    border: 2px solid #e34432;
+    border-radius: 6px;
+    font-size: 18px;
+    color: white;
+    /* animation: background-color 0.6s; */
+}
+.secondaryBut:hover{
+    background-color: transparent;
+    color: black;
+    border: 2px solid #e34432;
+}
+
+.auth_but{
+    box-shadow: 4px 4px orangered;
+    animation: box-shadow ease-in-out 0.4s;
+}
+
+.auth_but:hover{
+    box-shadow: none;
+    transform: translate(4px,4px);
+}
+
+.glow{
+    text-shadow: 4px 4px 8px white;
+}
