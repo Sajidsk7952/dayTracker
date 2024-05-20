@@ -1,6 +1,9 @@
 import React from "react";
 import { assests } from "../../assests";
+import app from "../../firebase/firebaseConfig";
 const Hero = () => {
+  console.log(app);
+  // console.log(authService.auth);
   return (
     <div className="px-6 py-4 flex justify-evenly items-center  sm:flex-row flex-col">
       <div className="flex-1">
@@ -25,7 +28,7 @@ const Hero = () => {
             <button className="bg-gradient-to-r from-amber-500 to-pink-500 text-white text-[18px] glow rounded-lg px-6 py-4 mt-10 capitalize hover:bg-gradient-to-r hover:from-red-500 hover:to-orange-500 duration-200">Join Now for free</button>
         </div>
       </div>
-      <div className="flex-1 overflow-hidden rounded-xl bg-gradient-to-r from-orange-500 via-pink-700 to-yellow-600 px-1 py-1 hover:px-1.5 hover:py-1.5 cursor-pointer duration-75">
+      <div className="flex-1 overflow-hidden rounded-xl bg-gradient-to-r from-orange-500 via-pink-700 to-yellow-600 px-1 py-1 cursor-pointer duration-75">
         <img src={assests.background} alt="background" className="rounded-xl object-contain"/>
       </div>
     </div>

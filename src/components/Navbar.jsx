@@ -1,25 +1,30 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { LuMenu } from "react-icons/lu";
 import { RxCross2 } from "react-icons/rx";
 import { login, logout } from "../store/AuthSlice";
 const Navbar = () => {
   const authData = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   console.log(authData);
   const [showMenu, setShowMenu] = useState(false);
 
   const navLinks = [
-    { path: "/contactUs", title: "Contact Us", isAuth: false },
-    { path: "/aboutUs", title: "About Us", isAuth: false },
-
+    { id: "1", path: "/contactUs", title: "Contact Us", isAuth: false },
+    { id: "2", path: "/aboutUs", title: "About Us", isAuth: false },
   ];
 
   const toggleMenu = () => {
     setShowMenu((prev) => !prev);
   };
 
+  const handleLogout = () => {
+    window.alert("logout successfull!!");
+    navigate("/");
+    dispatch(logout());
+  };
   return (
     <nav className="w-full flex justify-between items-center py-2 bg-white z-10 fixed">
       <NavLink to="/">
@@ -31,33 +36,29 @@ const Navbar = () => {
         {navLinks.map((nav, index) =>
           !nav.isAuth ? (
             <li
-              key={index}
-              className={`cursor-pointer text-[18px] text-black mr-6 `}
+              key={nav.id}
+              className={`cursor-pointer text-[18px] text-black mr-6 hover:underline`}
             >
-              <NavLink to={nav.path}>{nav.title}</NavLink>
+              <NavLink
+                to={nav.path}
+                className={({ isActive }) => {
+                  return isActive ? "underline" : "";
+                }}
+                end
+              >
+                {nav.title}
+              </NavLink>
             </li>
           ) : null
         )}
         {authData.authStatus && (
           <li className="px-3">
-            <button
-              className="secondaryBut"
-              onClick={() => {
-                navigate("/auth?type=signUp");
-              }}
-            >
-              Work Space
-            </button>
+            <button className="secondaryBut">Work Space</button>
           </li>
         )}
         {authData.authStatus && (
           <li className="px-3">
-            <button
-              className="primaryBut"
-              onClick={() => {
-                navigate("/auth?type=login");
-              }}
-            >
+            <button className="primaryBut" onClick={handleLogout}>
               Logout
             </button>
           </li>
@@ -98,7 +99,7 @@ const Navbar = () => {
         <div
           className={`${
             !showMenu ? "hidden" : "flex"
-          } absolute right-0 p-6 top-[78px] bg-white w-full duration-500`}
+          } absolute right-0 p-6 top-[58px] bg-white w-full duration-500`}
         >
           <ul className="list-none flex flex-col justify-end items-center flex-1 ease-out duration-300">
             {navLinks.map((nav, index) => (
@@ -108,11 +109,30 @@ const Navbar = () => {
                   index === navLinks.length - 1 ? "mb-0" : "mb-5"
                 }`}
               >
-                <NavLink to={nav.path}>{nav.title}</NavLink>
+                <NavLink
+                  to={nav.path}
+                  className={({ isActive }) => {
+                    return isActive ? "underline" : "";
+                  }}
+                >
+                  {nav.title}
+                </NavLink>
               </li>
             ))}
-            <div className="flex justify-evenly py-4">
-              <li className="px-3 ">
+            {authData.authStatus && (
+              <li className="py-3">
+                <button className="secondaryBut">Work Space</button>
+              </li>
+            )}
+            {authData.authStatus && (
+              <li className="py-3">
+                <button className="primaryBut" onClick={handleLogout}>
+                  Logout
+                </button>
+              </li>
+            )}
+            {!authData.authStatus && (
+              <li className="py-3">
                 <button
                   className="primaryBut"
                   onClick={() => {
@@ -122,7 +142,9 @@ const Navbar = () => {
                   Login
                 </button>
               </li>
-              <li className="px-3">
+            )}
+            {!authData.authStatus && (
+              <li className="py-3">
                 <button
                   className="secondaryBut"
                   onClick={() => {
@@ -132,7 +154,7 @@ const Navbar = () => {
                   Join for Free
                 </button>
               </li>
-            </div>
+            )}
           </ul>
         </div>
       </div>

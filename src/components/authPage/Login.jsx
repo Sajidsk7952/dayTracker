@@ -3,20 +3,32 @@ import { gifs } from "../../assests/gifs";
 import { IoEyeOutline } from "react-icons/io5";
 import { IoEyeOffOutline } from "react-icons/io5";
 import { useForm } from "react-hook-form";
-import {login,logout} from '../../store/AuthSlice';
+import { login, logout } from "../../store/AuthSlice";
 import { useDispatch, useSelector } from "react-redux";
+import authService from "../../firebase/authService";
 const Login = () => {
-  const authData = useSelector(state => state.auth);
+  const authData = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const [type, setType] = useState("password");
   const { handleSubmit, register } = useForm();
-  const submitHandler = (data) => {
+  const submitHandler = async (data) => {
+    // window.alert("login succesfull!!");
     console.log(data);
-    dispatch(login(data));
+    const {login_email,login_password} = data;
+    console.log(login_email,login_password);
+    const res = await authService.loginAccount(login_email,login_password);
+    console.log(res);
+    // const user = authService.getAccount();
+    // console.log(user);
+    console.log(res.user);
+    if (res) {
+      dispatch(login({ ...res.user }));
+    }
     console.log(authData);
+    
   };
   return (
-    <div className="flex flex-col sm:flex-row justify-evenly w-full fixed top-0">
+    <div className="flex flex-col sm:flex-row justify-evenly w-full">
       <div className="flex-1">
         <img src={gifs.login} alt="login gif" />
       </div>
@@ -54,11 +66,11 @@ const Login = () => {
                 className="w-[90%] px-4 py-2 outline-none border-none"
                 placeholder="enter your password"
                 defaultValue=""
-                {...register("login_password",{
+                {...register("login_password", {
                   required: {
                     value: true,
-                    message: "please enter an valid password"
-                  }
+                    message: "please enter an valid password",
+                  },
                 })}
               />
               <button

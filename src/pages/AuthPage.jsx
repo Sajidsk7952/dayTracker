@@ -9,13 +9,13 @@ const AuthPage = () => {
     console.log(query);
     if(query === "login"){
         return(
-            <div>
+            <div className='relative top-[40px]'>
                 <Login />
             </div>
         )
     }
   return (
-    <div>
+    <div className='relative top-[40px]'>
       <SignUp />
     </div>
   )

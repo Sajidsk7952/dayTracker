@@ -1,15 +1,25 @@
 import React, { useState } from "react";
 import { gifs } from "../../assests/gifs";
-import { IoEyeOutline } from "react-icons/io5";
-import { IoEyeOffOutline } from "react-icons/io5";
+import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 import { useForm } from "react-hook-form";
-const SignUp = () => {
-  const [type, setType] = useState("password");
-  const { register, handleSubmit, formState, getValues } = useForm();
-  const submitHandler = (data) => {
+import authService from "../../firebase/authService";
 
+const SignUp = () => {
+  const [passwordType, setPasswordType] = useState("password");
+  const [confirmPasswordType, setConfirmPasswordType] = useState("password");
+
+  const { register, handleSubmit, formState, getValues } = useForm();
+
+  const submitHandler = async (data) => {
     console.log(data);
+    const {signup_email,signup_password,signup_confirmPassword} = data;
+    console.log(signup_email,signup_password,signup_confirmPassword);
+    const res = await authService.createAccount(signup_email,signup_password);
+    // const user = authService.getAccount();
+    // console.log(user);
+    console.log(res);
   };
+
   return (
     <div className="flex flex-col sm:flex-row justify-evenly">
       <div className="flex-1">
@@ -24,23 +34,23 @@ const SignUp = () => {
             <input
               type="email"
               name="email"
-              id="emial"
+              id="email" // Corrected typo here
               className="w-full sm:w-[80%] px-4 py-2 border-[2px] border-black"
               placeholder="enter your email"
               defaultValue=" "
               {...register("signup_email", {
                 required: {
                   value: true,
-                  message: "email is required",
+                  message: "Email is required",
                 },
                 pattern: {
                   value: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
-                  message: "please enter valid email",
+                  message: "Please enter a valid email",
                 },
               })}
             />
             <p className="text-red-700 capitalize">
-              {formState.errors.email?.message}
+              {formState.errors.signup_email?.message}
             </p>
           </div>
           <div className="flex flex-col my-6">
@@ -49,7 +59,7 @@ const SignUp = () => {
             </label>
             <div className="border-[2px] border-black w-full sm:w-[80%] flex justify-between">
               <input
-                type={type}
+                type={passwordType}
                 name="password"
                 id="password"
                 className="w-[90%] px-4 py-2 outline-none border-none"
@@ -58,28 +68,24 @@ const SignUp = () => {
                 {...register("signup_password", {
                   required: {
                     value: true,
-                    message: "Please enter Password",
+                    message: "Please enter a password",
                   },
                 })}
               />
               <button
                 className="w-[4%] pr-10"
                 onClick={() => {
-                  if (type === "password") {
-                    setType("text");
-                  } else {
-                    setType("password");
-                  }
+                  setPasswordType(passwordType === "password" ? "text" : "password");
                 }}
               >
-                {type === "password" ? (
+                {passwordType === "password" ? (
                   <IoEyeOutline className="text-[25px]" />
                 ) : (
                   <IoEyeOffOutline className="text-[25px]" />
                 )}
               </button>
             </div>
-            <p className="text-red-700">{formState.errors.password?.message}</p>
+            <p className="text-red-700">{formState.errors.signup_password?.message}</p>
           </div>
           <div className="flex flex-col my-6">
             <label htmlFor="confirmPassword" className="mb-2 text-[20px] capitalize">
@@ -87,7 +93,7 @@ const SignUp = () => {
             </label>
             <div className="border-[2px] border-black w-full sm:w-[80%] flex justify-between">
               <input
-                type={type}
+                type={confirmPasswordType}
                 name="confirmPassword"
                 id="confirmPassword"
                 className="w-[90%] px-4 py-2 outline-none border-none"
@@ -96,23 +102,19 @@ const SignUp = () => {
                 {...register("signup_confirmPassword", {
                   required: {
                     value: true,
-                    message: "this is an required Field",
+                    message: "This field is required",
                   },
                   validate: (value) =>
-                    value === getValues("password") || "passwords do not match",
+                    value === getValues("signup_password") || "Passwords do not match",
                 })}
               />
               <button
                 className="w-[4%] pr-10"
                 onClick={() => {
-                  if (type === "password") {
-                    setType("text");
-                  } else {
-                    setType("password");
-                  }
+                  setConfirmPasswordType(confirmPasswordType === "password" ? "text" : "password");
                 }}
               >
-                {type === "password" ? (
+                {confirmPasswordType === "password" ? (
                   <IoEyeOutline className="text-[25px]" />
                 ) : (
                   <IoEyeOffOutline className="text-[25px]" />
@@ -120,7 +122,7 @@ const SignUp = () => {
               </button>
             </div>
             <p className="text-red-700 capitalize">
-              {formState.errors.confirmPassword?.message}
+              {formState.errors.signup_confirmPassword?.message}
             </p>
           </div>
           <div className="w-[80%]">
