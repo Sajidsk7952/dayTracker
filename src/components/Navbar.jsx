@@ -4,6 +4,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { LuMenu } from "react-icons/lu";
 import { RxCross2 } from "react-icons/rx";
 import { login, logout } from "../store/AuthSlice";
+import authService from "../firebase/authService";
 const Navbar = () => {
   const authData = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -23,6 +24,8 @@ const Navbar = () => {
   const handleLogout = () => {
     window.alert("logout successfull!!");
     navigate("/");
+    const logoutMesg = authService.logoutHandler();
+    console.log(logoutMesg);
     dispatch(logout());
   };
   return (
@@ -53,7 +56,7 @@ const Navbar = () => {
         )}
         {authData.authStatus && (
           <li className="px-3">
-            <button className="secondaryBut">Work Space</button>
+            <NavLink to='./workspace'><button className="secondaryBut">Work Space</button></NavLink>
           </li>
         )}
         {authData.authStatus && (

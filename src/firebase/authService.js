@@ -4,6 +4,9 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   onAuthStateChanged,
+  signOut,
+  GoogleAuthProvider,
+  signInWithPopup,
 } from "firebase/auth";
 class Auth {
   auth;
@@ -17,21 +20,35 @@ class Auth {
       return error.message;
     }
   }
-  getAccount(){
+  getAccount() {
     try {
-      return onAuthStateChanged(this.auth,(user)=>{
-        if(user){
+      return onAuthStateChanged(this.auth, (user) => {
+        if (user) {
           return user;
         }
         return null;
-      })
-    } catch (error) {
-      
-    }
+      });
+    } catch (error) {}
   }
   async loginAccount(email, password) {
     try {
       return await signInWithEmailAndPassword(this.auth, email, password);
+    } catch (error) {
+      return error.message;
+    }
+  }
+  async googleAuthHandler() {
+    try {
+      const provider = new GoogleAuthProvider();
+      const result = signInWithPopup(this.auth, provider);
+      return result;
+    } catch (error) {
+      return error.message;
+    }
+  }
+  logoutHandler() {
+    try {
+      return signOut(this.auth);
     } catch (error) {
       return error.message;
     }

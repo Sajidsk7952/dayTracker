@@ -2,8 +2,8 @@ import React from 'react'
 
 const Workspace = () => {
   return (
-    <div>
-      
+    <div className='top-[40px] relative'>
+      The workspace is here
     </div>
   )
 }

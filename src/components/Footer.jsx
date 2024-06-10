@@ -2,7 +2,7 @@ import React from 'react'
 
 const Footer = () => {
   return (
-    <div className='relative top-[30px]'>
+    <div className='relative top-[40px]'>
       footer is here
     </div>
   )

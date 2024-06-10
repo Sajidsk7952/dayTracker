@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { login, logout } from "../../store/AuthSlice";
 import { useDispatch, useSelector } from "react-redux";
 import authService from "../../firebase/authService";
+import SocialAuth from "./SocialAuth";
 const Login = () => {
   const authData = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -33,6 +34,9 @@ const Login = () => {
         <img src={gifs.login} alt="login gif" />
       </div>
       <div className="flex-1 sm:mt-10 mx-10 sm:mx-4">
+        <div className="w-full text-center">
+          <SocialAuth />
+        </div>
         <form onSubmit={handleSubmit(submitHandler)}>
           <div className="flex flex-col my-6">
             <label htmlFor="email" className="mb-2 text-[20px] capitalize">
