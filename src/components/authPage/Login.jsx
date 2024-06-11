@@ -14,16 +14,16 @@ const Login = () => {
   const { handleSubmit, register } = useForm();
   const submitHandler = async (data) => {
     // window.alert("login succesfull!!");
-    console.log(data);
+    // console.log(data);
     const {login_email,login_password} = data;
-    console.log(login_email,login_password);
+    // console.log(login_email,login_password);
     const res = await authService.loginAccount(login_email,login_password);
     console.log(res);
     // const user = authService.getAccount();
     // console.log(user);
-    console.log(res.user);
+    // console.log(res.user);
     if (res) {
-      dispatch(login({ ...res.user }));
+      dispatch(login({ ...res }));
     }
     console.log(authData);
     
@@ -46,7 +46,7 @@ const Login = () => {
               type="email"
               name="email"
               id="emial"
-              className="w-full sm:w-[80%] px-4 py-2 border-[2px] border-black"
+              className="w-full sm:w-[80%] px-4 py-2 border-[2px] border-black rounded-xl"
               placeholder="enter your email"
               defaultValue=""
               {...register("login_email", {
@@ -62,7 +62,7 @@ const Login = () => {
             <label htmlFor="password" className="mb-2 text-[20px] capitalize">
               Password:{" "}
             </label>
-            <div className="border-[2px] border-black w-full sm:w-[80%] flex justify-between">
+            <div className="border-[2px] border-black w-full sm:w-[80%] flex justify-between rounded-xl overflow-hidden">
               <input
                 type={type}
                 name="password"
@@ -79,6 +79,7 @@ const Login = () => {
               />
               <button
                 className="w-[4%] pr-10"
+                type = "button"
                 onClick={() => {
                   if (type === "password") {
                     setType("text");
@@ -96,7 +97,7 @@ const Login = () => {
             </div>
           </div>
           <div className="w-[80%]">
-            <button className="text-center px-6 py-3 bg-orange-500 hover:bg-orange-700 text-white text-[20px] rounded-lg auth_but">
+            <button type="submit" className="text-center px-6 py-3 bg-orange-500 hover:bg-orange-700 text-white text-[20px] rounded-lg auth_but">
               Login
             </button>
           </div>

@@ -3,7 +3,7 @@ import { gifs } from "../../assests/gifs";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 import { useForm } from "react-hook-form";
 import authService from "../../firebase/authService";
-
+import SocialAuth from "./SocialAuth";
 const SignUp = () => {
   const [passwordType, setPasswordType] = useState("password");
   const [confirmPasswordType, setConfirmPasswordType] = useState("password");
@@ -12,12 +12,15 @@ const SignUp = () => {
 
   const submitHandler = async (data) => {
     console.log(data);
-    const {signup_email,signup_password,signup_confirmPassword} = data;
-    console.log(signup_email,signup_password,signup_confirmPassword);
-    const res = await authService.createAccount(signup_email,signup_password);
+    const { signup_email, signup_password, signup_confirmPassword } = data;
+    console.log(signup_email, signup_password, signup_confirmPassword);
+    const res = await authService.createAccount(signup_email, signup_password);
     // const user = authService.getAccount();
     // console.log(user);
     console.log(res);
+    if(res){
+      window.alert("account created successfully!!!")
+    }
   };
 
   return (
@@ -26,6 +29,9 @@ const SignUp = () => {
         <img src={gifs.signUp} alt="login gif" />
       </div>
       <div className="flex-1 sm:mt-10 mx-10 sm:mx-4">
+        <div className="w-full text-center">
+          <SocialAuth />
+        </div>
         <form onSubmit={handleSubmit(submitHandler)}>
           <div className="flex flex-col my-6">
             <label htmlFor="email" className="mb-2 text-[20px] capitalize">
@@ -35,7 +41,7 @@ const SignUp = () => {
               type="email"
               name="email"
               id="email" // Corrected typo here
-              className="w-full sm:w-[80%] px-4 py-2 border-[2px] border-black"
+              className="w-full sm:w-[80%] px-4 py-2 border-[2px] border-black rounded-xl"
               placeholder="enter your email"
               defaultValue=" "
               {...register("signup_email", {
@@ -57,7 +63,7 @@ const SignUp = () => {
             <label htmlFor="password" className="mb-2 text-[20px] capitalize">
               Password:{" "}
             </label>
-            <div className="border-[2px] border-black w-full sm:w-[80%] flex justify-between">
+            <div className="border-[2px] border-black w-full sm:w-[80%] flex justify-between rounded-xl overflow-hidden">
               <input
                 type={passwordType}
                 name="password"
@@ -74,8 +80,11 @@ const SignUp = () => {
               />
               <button
                 className="w-[4%] pr-10"
+                type="button"
                 onClick={() => {
-                  setPasswordType(passwordType === "password" ? "text" : "password");
+                  setPasswordType(
+                    passwordType === "password" ? "text" : "password"
+                  );
                 }}
               >
                 {passwordType === "password" ? (
@@ -85,13 +94,18 @@ const SignUp = () => {
                 )}
               </button>
             </div>
-            <p className="text-red-700">{formState.errors.signup_password?.message}</p>
+            <p className="text-red-700">
+              {formState.errors.signup_password?.message}
+            </p>
           </div>
           <div className="flex flex-col my-6">
-            <label htmlFor="confirmPassword" className="mb-2 text-[20px] capitalize">
+            <label
+              htmlFor="confirmPassword"
+              className="mb-2 text-[20px] capitalize"
+            >
               Confirm Password:{" "}
             </label>
-            <div className="border-[2px] border-black w-full sm:w-[80%] flex justify-between">
+            <div className="border-[2px] border-black w-full sm:w-[80%] flex justify-between rounded-xl overflow-hidden">
               <input
                 type={confirmPasswordType}
                 name="confirmPassword"
@@ -105,13 +119,17 @@ const SignUp = () => {
                     message: "This field is required",
                   },
                   validate: (value) =>
-                    value === getValues("signup_password") || "Passwords do not match",
+                    value === getValues("signup_password") ||
+                    "Passwords do not match",
                 })}
               />
               <button
                 className="w-[4%] pr-10"
+                type="button"
                 onClick={() => {
-                  setConfirmPasswordType(confirmPasswordType === "password" ? "text" : "password");
+                  setConfirmPasswordType(
+                    confirmPasswordType === "password" ? "text" : "password"
+                  );
                 }}
               >
                 {confirmPasswordType === "password" ? (

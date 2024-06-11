@@ -1,8 +1,8 @@
 import React from "react";
 import { assests } from "../../assests";
-import app from "../../firebase/firebaseConfig";
+// import app from "../../firebase/firebaseConfig";
 const Hero = () => {
-  console.log(app);
+  // console.log(app);
   // console.log(authService.auth);
   return (
     <div className="px-6 py-4 flex justify-evenly items-center  sm:flex-row flex-col">

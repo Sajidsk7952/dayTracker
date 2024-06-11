@@ -7,6 +7,7 @@ import {
   signOut,
   GoogleAuthProvider,
   signInWithPopup,
+  FacebookAuthProvider,
 } from "firebase/auth";
 class Auth {
   auth;
@@ -15,24 +16,33 @@ class Auth {
   }
   async createAccount(email, password) {
     try {
-      return await createUserWithEmailAndPassword(this.auth, email, password);
+      const userCredential =  await createUserWithEmailAndPassword(this.auth, email, password);
+      const user = userCredential.user;
+      return user;
     } catch (error) {
       return error.message;
     }
   }
   getAccount() {
-    try {
-      return onAuthStateChanged(this.auth, (user) => {
-        if (user) {
-          return user;
-        }
-        return null;
-      });
-    } catch (error) {}
+    return new Promise((resolve, reject) => {
+      try {
+        onAuthStateChanged(this.auth, (user) => {
+          if (user) {
+            resolve(user);
+          } else {
+            resolve(null);
+          }
+        });
+      } catch (error) {
+        reject(error.message);
+      }
+    });
   }
   async loginAccount(email, password) {
     try {
-      return await signInWithEmailAndPassword(this.auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
+      const user = userCredential.user;
+      return user;
     } catch (error) {
       return error.message;
     }
@@ -40,9 +50,18 @@ class Auth {
   async googleAuthHandler() {
     try {
       const provider = new GoogleAuthProvider();
-      const result = signInWithPopup(this.auth, provider);
+      const result = await signInWithPopup(this.auth, provider);
       return result;
     } catch (error) {
+      return error.message;
+    }
+  }
+  async facebookAuthHandler(){
+    try{
+      const facebookProvider = new FacebookAuthProvider();
+      const result = await signInWithPopup(this.auth,facebookProvider);
+      return result;
+    }catch(error){
       return error.message;
     }
   }
