@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialTodoState = {
-    todos : [],
+    todos : {},
     loading : false,
     error: null,
 }
@@ -8,7 +8,6 @@ const initialTodoState = {
 const todoSlice = createSlice({
     name: 'todo',
     initialState: initialTodoState,
-    
     reducers: {
         
     }

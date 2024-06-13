@@ -9,19 +9,19 @@ const HomePage = () => {
   // const auth = getAuth();
   // console.log(authService.auth);
   const dispatch = useDispatch();
-  useEffect(()=>{
-    const subs = onAuthStateChanged(authService.auth,(user)=>{
-      if (user) {
-        console.log(user);
-        dispatch(login({...user}))
-      } else {
-        dispatch(logout());
-      }
-    });
-    return ()=>{
-      subs();
-    }
-  },[dispatch]);
+  // useEffect(()=>{
+  //   const subs = onAuthStateChanged(authService.auth,(user)=>{
+  //     if (user) {
+  //       console.log(user);
+  //       dispatch(login({...user}))
+  //     } else {
+  //       dispatch(logout());
+  //     }
+  //   });
+  //   return ()=>{
+  //     subs();
+  //   }
+  // },[dispatch]);
   const authState = useSelector((state)=>(state.auth));
   console.log(authState);
   return (
