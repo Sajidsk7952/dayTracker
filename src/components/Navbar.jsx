@@ -124,7 +124,7 @@ const Navbar = () => {
             ))}
             {authData.authStatus && (
               <li className="py-3">
-                <button className="secondaryBut">Work Space</button>
+                <NavLink to='./workspace'><button className="secondaryBut">Work Space</button></NavLink>
               </li>
             )}
             {authData.authStatus && (
