@@ -5,6 +5,7 @@ import authService from '../firebase/authService';
 import {login,logout} from '../store/AuthSlice';
 import {getAuth,onAuthStateChanged} from 'firebase/auth';
 import { useDispatch,useSelector } from 'react-redux';
+import TextEditor from '../components/workspace/TextEditor';
 const HomePage = () => {
   // const auth = getAuth();
   // console.log(authService.auth);
@@ -28,6 +29,7 @@ const HomePage = () => {
     <div className='top-[40px] relative'>
       <Hero />
       <Feautures />
+      {/* <TextEditor /> */}
       home page is here
     </div>
   )

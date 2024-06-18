@@ -1,11 +1,12 @@
 import React, { useRef, useState } from "react";
 import { FaPlus } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
-import { addTask, completeTask, deleteTask } from "../../store/TodoSlice";
+import { addTask, completeTask, deleteTask,setNotes } from "../../store/TodoSlice";
 import { MdDeleteOutline } from "react-icons/md";
+import TextEditor from "./TextEditor";
 
 const MillSecToTime = (props) => {
-  const {millSec} = props;
+  const { millSec } = props;
   console.log("mill sec are" + millSec);
   const date = new Date(millSec);
   console.log(date);
@@ -14,19 +15,19 @@ const MillSecToTime = (props) => {
   return time;
 };
 const TimeDuration = (props) => {
-  const {todoItem} = props;
+  const { todoItem } = props;
   const duration = todoItem.completedAt - todoItem.id;
-  console.log(duration+"is the duration");
+  console.log(duration + "is the duration");
   const durationTime = new Date(duration);
-  console.log("duration time is"+durationTime.toTimeString());
-  return durationTime.toISOString().substring(11,19);
-}
+  console.log("duration time is" + durationTime.toTimeString());
+  return durationTime.toISOString().substring(11, 19);
+};
 const Todo = () => {
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const inputRef = useRef("");
   const todo = useSelector((state) => state.todo);
-  console.log(todo.todos)
+  console.log(todo.todos);
   const submitHandler = (e) => {
     e.preventDefault();
     if (inputRef.current.value) {
@@ -45,7 +46,11 @@ const Todo = () => {
     }
     e.target.reset();
   };
-
+  const saveHandler = (data)=>{
+    console.log(data);
+    dispatch(setNotes(data));
+    console.log(todo);
+  }
   return (
     <div className="mx-4 my-2">
       <h1 className="text-2xl font-semibold tracking-wide">Today's Tasks:</h1>
@@ -74,50 +79,63 @@ const Todo = () => {
           <span className="text-red-600 text-lg capitalize">{error}</span>
         )}
       </div>
-      <div>
-        <h1 className="text-xl font-semibold mt-4">On-Going Missions:</h1>
-        <div className="ml-2 mr-2 border rounded-xl p-4 shadow-2xl">
-          {todo.todos && todo.todos.length > 0 ? (
-            todo.todos.map((todoItem, index) => (
-              <div
-                key={index}
-                className="flex flex-col md:flex-row justify-start md:justify-between items-start md:items-center w-full border-b py-2"
-              >
-                <div className="flex items-center">
-                  <input
-                    type="checkbox"
-                    checked={todoItem.completed}
-                    name={todoItem.id}
-                    id={todoItem.id}
-                    className="mr-2 w-5 h-5"
-                    onChange={() => dispatch(completeTask(todoItem))}
-                  />
-                  <label
-                    htmlFor={todoItem.id}
-                    className={`${
-                      todoItem.completed ? "text-green-700" : "text-red-700"
-                    } text-lg`}
-                  >
-                    {todoItem.task}
-                  </label>
+      <section>
+        <h1 className="text-xl font-semibold my-4">On-Going Missions:</h1>
+        <div className="flex flex-col md:flex-row">
+          <div className=" flex-1 ml-2 mr-2 border rounded-xl p-2 shadow-2xl">
+            {todo.todos && todo.todos.length > 0 ? (
+              todo.todos.map((todoItem, index) => (
+                <div
+                  key={index}
+                  className="flex flex-col justify-start md:justify-between items-start w-full border-b py-2"
+                >
+                  <div className="flex items-center">
+                    <input
+                      type="checkbox"
+                      checked={todoItem.completed}
+                      name={todoItem.id}
+                      id={todoItem.id}
+                      className="mr-2 w-5 h-5"
+                      onChange={() => dispatch(completeTask(todoItem))}
+                    />
+                    <label
+                      htmlFor={todoItem.id}
+                      className={`${
+                        todoItem.completed ? "text-green-700" : "text-red-700"
+                      } text-[18px]`}
+                    >
+                      {todoItem.task}
+                    </label>
+                  </div>
+                  <div className="flex justify-end w-full gap-2 items-center">
+                    {!todoItem.completed ? (
+                      <p className="text-sm italic">
+                        Created at: <MillSecToTime millSec={todoItem.id} />
+                      </p>
+                    ) : (
+                      <p className="text-sm italic">
+                        Completed In <TimeDuration todoItem={todoItem} />
+                      </p>
+                    )}
+                    {/* <TimeDuration todoItem={todoItem}/> */}
+                    <MdDeleteOutline
+                      className="text-3xl cursor-pointer"
+                      onClick={() => dispatch(deleteTask(todoItem))}
+                    />
+                  </div>
                 </div>
-                <div className="flex justify-end w-full gap-2 items-center">
-                  {!todoItem.completed ? <p className="text-sm italic">Created at: <MillSecToTime millSec={todoItem.id}/></p> : <p className="text-sm italic">Completed In <TimeDuration todoItem={todoItem}/></p>}
-                  {/* <TimeDuration todoItem={todoItem}/> */}
-                  <MdDeleteOutline
-                    className="text-3xl cursor-pointer"
-                    onClick={() => dispatch(deleteTask(todoItem))}
-                  />
-                </div>
-              </div>
-            ))
-          ) : (
-            <h2 className="text-lg italic text-center">
-              C'mon, add your first mission and accomplish it!
-            </h2>
-          )}
+              ))
+            ) : (
+              <h2 className=" text-lg italic text-center">
+                C'mon, add your first mission and accomplish it!
+              </h2>
+            )}
+          </div>
+          <div className="flex-1 shadow-2xl rounded-lg border py-2">
+            <TextEditor onclick={saveHandler}/>
+          </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 };
