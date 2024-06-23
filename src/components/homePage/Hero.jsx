@@ -1,9 +1,11 @@
 import React from "react";
 import { assests } from "../../assests";
+import { useNavigate } from "react-router-dom";
 // import app from "../../firebase/firebaseConfig";
 const Hero = () => {
   // console.log(app);
   // console.log(authService.auth);
+  const navigate = useNavigate();
   return (
     <div className="px-6 py-4 flex justify-evenly items-center  sm:flex-row flex-col">
       <div className="flex-1">
@@ -25,7 +27,7 @@ const Hero = () => {
           together!
         </p>
         <div className="mb-10 sm:mb-4">
-            <button className="bg-gradient-to-r from-amber-500 to-pink-500 text-white text-[18px] glow rounded-lg px-6 py-4 mt-10 capitalize hover:bg-gradient-to-r hover:from-red-500 hover:to-orange-500 duration-200">Join Now for free</button>
+            <button className="bg-gradient-to-r from-amber-500 to-pink-500 text-white text-[18px] glow rounded-lg px-6 py-4 mt-10 capitalize hover:bg-gradient-to-r hover:from-red-500 hover:to-orange-500 duration-200" onClick={()=>{navigate('/auth')}}>Join Now for free</button>
         </div>
       </div>
       <div className="flex-1 overflow-hidden rounded-xl bg-gradient-to-r from-orange-500 via-pink-700 to-yellow-600 px-1 py-1 cursor-pointer duration-75">

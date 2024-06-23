@@ -7,7 +7,7 @@ const TextEditor = ({ onclick, data }) => {
 
   useEffect(() => {
     if (quillRef.current && data) {
-      console.log(data);
+      // console.log(data);
       const editor = quillRef.current.getEditor();
       editor.clipboard.dangerouslyPasteHTML(data);
     }

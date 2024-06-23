@@ -12,10 +12,10 @@ const Navbar = () => {
   console.log(authData);
   const [showMenu, setShowMenu] = useState(false);
 
-  const navLinks = [
-    { id: "1", path: "/contactUs", title: "Contact Us", isAuth: false },
-    { id: "2", path: "/aboutUs", title: "About Us", isAuth: false },
-  ];
+  // const navLinks = [
+  //   { id: "1", path: "/contactUs", title: "Contact Us", isAuth: false },
+  //   { id: "2", path: "/aboutUs", title: "About Us", isAuth: false },
+  // ];
 
   const toggleMenu = () => {
     setShowMenu((prev) => !prev);
@@ -27,6 +27,7 @@ const Navbar = () => {
     const logoutMesg = authService.logoutHandler();
     console.log(logoutMesg);
     dispatch(logout());
+    setShowMenu(false);
   };
   return (
     <nav className="w-full flex justify-between items-center py-2 bg-white z-10 fixed">
@@ -36,7 +37,7 @@ const Navbar = () => {
         </span>
       </NavLink>
       <ul className="list-none sm:flex hidden justify-end items-center flex-1 mr-4">
-        {navLinks.map((nav, index) =>
+        {/* {navLinks.map((nav, index) =>
           !nav.isAuth ? (
             <li
               key={nav.id}
@@ -53,10 +54,10 @@ const Navbar = () => {
               </NavLink>
             </li>
           ) : null
-        )}
+        )} */}
         {authData.authStatus && (
           <li className="px-3">
-            <NavLink to='./workspace'><button className="secondaryBut">Work Space</button></NavLink>
+            <NavLink to='./workspace'><button className="secondaryBut" onClick={()=>{setShowMenu(false)}}>Work Space</button></NavLink>
           </li>
         )}
         {authData.authStatus && (
@@ -71,6 +72,7 @@ const Navbar = () => {
             <button
               className="primaryBut"
               onClick={() => {
+                setShowMenu(false);
                 navigate("/auth?type=login");
               }}
             >
@@ -83,6 +85,7 @@ const Navbar = () => {
             <button
               className="secondaryBut"
               onClick={() => {
+                setShowMenu(false);
                 navigate("/auth?type=signUp");
               }}
             >
@@ -102,10 +105,10 @@ const Navbar = () => {
         <div
           className={`${
             !showMenu ? "hidden" : "flex"
-          } absolute right-0 p-6 top-[58px] bg-white w-full duration-500`}
+          } absolute right-0 p-6 top-[58px] bg-white bg-opacity-90 w-full duration-500`}
         >
-          <ul className="list-none flex flex-col justify-end items-center flex-1 ease-out duration-300">
-            {navLinks.map((nav, index) => (
+          <ul className="list-none flex flex-col justify-center items-end flex-1 ease-out duration-300">
+            {/* {navLinks.map((nav, index) => (
               <li
                 key={nav.id}
                 className={`cursor-pointer text-[18px] text-black ${
@@ -121,10 +124,10 @@ const Navbar = () => {
                   {nav.title}
                 </NavLink>
               </li>
-            ))}
+            ))} */}
             {authData.authStatus && (
               <li className="py-3">
-                <NavLink to='./workspace'><button className="secondaryBut">Work Space</button></NavLink>
+                <NavLink to='./workspace'><button className="secondaryBut" onClick={()=>{setShowMenu(false)}}>Work Space</button></NavLink>
               </li>
             )}
             {authData.authStatus && (
@@ -139,6 +142,7 @@ const Navbar = () => {
                 <button
                   className="primaryBut"
                   onClick={() => {
+                    setShowMenu(false);
                     navigate("/auth?type=login");
                   }}
                 >
@@ -151,6 +155,7 @@ const Navbar = () => {
                 <button
                   className="secondaryBut"
                   onClick={() => {
+                    setShowMenu(false);
                     navigate("/auth?type=signUp");
                   }}
                 >

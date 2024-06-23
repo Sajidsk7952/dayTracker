@@ -23,8 +23,6 @@ class Firestore{
             const docSnap = await getDoc(docRef);
             if (docSnap.exists()) {
                 return { success: true, data: docSnap.data() };
-            } else {
-                return { success: false, message: "No such document!" };
             }
         } catch (error) {
             return { success: false, message: error.message };

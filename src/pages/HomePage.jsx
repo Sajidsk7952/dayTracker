@@ -9,7 +9,7 @@ import TextEditor from '../components/workspace/TextEditor';
 const HomePage = () => {
   // const auth = getAuth();
   // console.log(authService.auth);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   // useEffect(()=>{
   //   const subs = onAuthStateChanged(authService.auth,(user)=>{
   //     if (user) {
@@ -23,14 +23,12 @@ const HomePage = () => {
   //     subs();
   //   }
   // },[dispatch]);
-  const authState = useSelector((state)=>(state.auth));
-  console.log(authState);
+  // const authState = useSelector((state)=>(state.auth));
+  // console.log(authState);
   return (
     <div className='top-[40px] relative'>
       <Hero />
       <Feautures />
-      {/* <TextEditor /> */}
-      home page is here
     </div>
   )
 }
