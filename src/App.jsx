@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { RouterProvider, createBrowserRouter, useNavigate } from "react-router-dom";
 import RootPage from "./pages/RootPage";
 import HomePage from "./pages/HomePage";
 import AuthPage from "./pages/AuthPage";
@@ -15,12 +15,14 @@ import { login,logout } from "./store/AuthSlice";
 
 const App = () => {
   const dispatch = useDispatch();
+  // const navigate = useNavigate();
   const authStatus = useSelector(state => state.auth);
   useEffect(()=>{
       const subs = onAuthStateChanged(authService.auth,(user)=>{
         if (user) {
           console.log(user);
-          dispatch(login({...user}))
+          dispatch(login({...user}));
+          // navigate('/workspace');
         } else {
           dispatch(logout());
         }
@@ -29,7 +31,7 @@ const App = () => {
         subs();
       }
     },[dispatch]);
-    console.log(authStatus);
+    // console.log(authStatus);
   const routes = createBrowserRouter([
     {
       path: "/",

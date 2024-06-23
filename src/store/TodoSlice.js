@@ -27,8 +27,14 @@ const todoSlice = createSlice({
     },
     setNotes: (state,action) => {
       state.notes = action.payload;
+    },
+    addTodo: (state,action)=>{
+      state.error = action.payload.error;
+      state.loading = action.payload.loading;
+      state.notes = action.payload.notes;
+      state.todos = action.payload.todos;
     }
   },
 });
-export const { addTask, completeTask, deleteTask,setNotes } = todoSlice.actions;
+export const { addTask, completeTask, deleteTask,setNotes,addTodo } = todoSlice.actions;
 export default todoSlice.reducer;

@@ -1,33 +1,48 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FaPlus } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
-import { addTask, completeTask, deleteTask,setNotes } from "../../store/TodoSlice";
+import { addTask, addTodo, completeTask, deleteTask,setNotes } from "../../store/TodoSlice";
 import { MdDeleteOutline } from "react-icons/md";
 import TextEditor from "./TextEditor";
+import firestoreService from "../../firebase/firestoreService";
 
 const MillSecToTime = (props) => {
   const { millSec } = props;
-  console.log("mill sec are" + millSec);
+  // console.log("mill sec are" + millSec);
   const date = new Date(millSec);
-  console.log(date);
+  // console.log(date);
   const time = date.toLocaleTimeString();
-  console.log(time);
+  // console.log(time);
   return time;
 };
 const TimeDuration = (props) => {
   const { todoItem } = props;
   const duration = todoItem.completedAt - todoItem.id;
-  console.log(duration + "is the duration");
+  // console.log(duration + "is the duration");
   const durationTime = new Date(duration);
-  console.log("duration time is" + durationTime.toTimeString());
+  // console.log("duration time is" + durationTime.toTimeString());
   return durationTime.toISOString().substring(11, 19);
 };
 const Todo = () => {
-  const [error, setError] = useState(null);
+  const auth = useSelector(state => state.auth);
+  const uid = auth.userData.uid;
   const dispatch = useDispatch();
   const inputRef = useRef("");
+  useEffect(() => {
+    const fetchData = async () => {
+      const doc = await firestoreService.getTodo(uid);
+      console.log(doc.data);
+      if (doc.success) {
+        dispatch(addTodo({...doc.data}));
+      }
+    };
+    fetchData();
+  }, [uid]);
+  const [error, setError] = useState(null);
+  
   const todo = useSelector((state) => state.todo);
-  console.log(todo.todos);
+  // console.log(todo);
+  // console.log(todo.todos);
   const submitHandler = (e) => {
     e.preventDefault();
     if (inputRef.current.value) {
@@ -46,10 +61,14 @@ const Todo = () => {
     }
     e.target.reset();
   };
-  const saveHandler = (data)=>{
-    console.log(data);
+  const saveHandler = async(data)=>{
+    // e.preventDefault();
+    // console.log(data);
     dispatch(setNotes(data));
-    console.log(todo);
+    // console.log(todo);
+    const res = await firestoreService.addTask(uid,todo);
+    // console.log(res);
+    
   }
   return (
     <div className="mx-4 my-2">
@@ -132,7 +151,7 @@ const Todo = () => {
             )}
           </div>
           <div className="flex-1 shadow-2xl rounded-lg border py-2">
-            <TextEditor onclick={saveHandler}/>
+            <TextEditor onclick={saveHandler} data={todo.notes}/>
           </div>
         </div>
       </section>
