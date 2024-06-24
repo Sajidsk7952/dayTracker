@@ -25,7 +25,7 @@ const TimeDuration = (props) => {
 };
 const Todo = () => {
   const auth = useSelector(state => state.auth);
-  const uid = auth.userData.uid;
+  const uid = auth.userData.user.uid;
   const dispatch = useDispatch();
   const inputRef = useRef("");
   useEffect(() => {

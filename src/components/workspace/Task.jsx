@@ -8,7 +8,7 @@ const Task = () => {
   const [isOpen, setOpen] = useState(false);
   const [currTask, setCurrTask] = useState(null);
   // console.log(user);
-  const uid = user.userData.uid;
+  const uid = user.userData.user.uid;
   // console.log(uid);
   const [taskArr, setTasksArr] = useState([]);
   useEffect(() => {
