@@ -78,8 +78,8 @@ const Feautures = () => {
             <li><span className="font-semibold">Details:</span>Go to Details to view your todo's and notes and the time taken to complete each task</li>
           </ul>
         </div>
-        <div className="flex-1">
-          <img src={assests.tracktodo} alt='previous todos'/>
+        <div className="flex-1 overflow-hidden">
+          <img src={assests.tracktodo} alt='previous todos' className="h-[80%]"/>
         </div>
       </div>
     </div>

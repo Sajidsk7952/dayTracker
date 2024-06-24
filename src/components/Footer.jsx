@@ -5,7 +5,7 @@ import { FaLinkedin } from "react-icons/fa";
 import { IoMail } from "react-icons/io5";
 const Footer = () => {
   return (
-    <footer className="relative top-[50px] bg-gray-100">
+    <footer className="relative top-[80px] bg-gray-100">
       <div className="flex items-start justify-around">
         <div className="m-8">
           {/* <img src={logo2} alt="logo" className="w-[100px] h-[100px]" /> */}
