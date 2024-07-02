@@ -21,7 +21,7 @@ const AuthComp = ({ children }) => {
     } catch (error) {
       console.log(error);
     }
-  }, []);
+  }, [authStatus]);
 
   return (
     <div className='top-[40px] relative'>

@@ -9,7 +9,7 @@ const Navbar = () => {
   const authData = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  console.log(authData);
+  // console.log(authData);
   const [showMenu, setShowMenu] = useState(false);
 
   // const navLinks = [

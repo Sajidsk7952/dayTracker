@@ -39,7 +39,7 @@ const Todo = () => {
     fetchData();
   }, [uid]);
   const [error, setError] = useState(null);
-  
+  console.log("loads!!");
   const todo = useSelector((state) => state.todo);
   // console.log(todo);
   // console.log(todo.todos);
@@ -63,12 +63,17 @@ const Todo = () => {
   };
   const saveHandler = async(data)=>{
     // e.preventDefault();
-    // console.log(data);
+    console.log(data);
+    console.log(todo);
     dispatch(setNotes(data));
-    // console.log(todo);
+    console.log(todo);
+    // const task = 
     const res = await firestoreService.addTask(uid,todo);
     // console.log(res);
-    
+    if(res.success){
+      window.alert("saved succesfully !!");
+    }
+    console.log(res.data)
   }
   return (
     <div className="mx-4 my-2">

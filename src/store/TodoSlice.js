@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
+// import { get } from "firebase/database";
 const initialTodoState = {
   todos: [],
   notes : "",
   loading: false,
   error: null,
 };
-
 const todoSlice = createSlice({
   name: "todo",
   initialState: initialTodoState,
@@ -26,7 +26,9 @@ const todoSlice = createSlice({
       state.todos = state.todos.filter((todo) => todo.id !== action.payload.id);
     },
     setNotes: (state,action) => {
+      console.log(action.payload);
       state.notes = action.payload;
+      console.log(state.notes);
     },
     addTodo: (state,action)=>{
       state.error = action.payload.error;
