@@ -65,7 +65,7 @@ const Feautures = () => {
           </ul>
         </div>
         <div className="flex-1">
-          <img src={assests.save} alt="" srcset="" />
+          <img src={assests.save} alt="save" />
         </div>
       </div>
       <div className="my-4 flex flex-col md:flex-row justify-center items-start">

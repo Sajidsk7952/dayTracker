@@ -1,7 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FaPlus } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
-import { addTask, addTodo, completeTask, deleteTask,setNotes } from "../../store/TodoSlice";
+import {
+  addTask,
+  addTodo,
+  completeTask,
+  deleteTask,
+  setNotes,
+  saveTask,
+} from "../../store/TodoSlice";
 import { MdDeleteOutline } from "react-icons/md";
 import TextEditor from "./TextEditor";
 import firestoreService from "../../firebase/firestoreService";
@@ -24,7 +31,7 @@ const TimeDuration = (props) => {
   return durationTime.toISOString().substring(11, 19);
 };
 const Todo = () => {
-  const auth = useSelector(state => state.auth);
+  const auth = useSelector((state) => state.auth);
   const uid = auth.userData.uid;
   const dispatch = useDispatch();
   const inputRef = useRef("");
@@ -33,11 +40,12 @@ const Todo = () => {
       const doc = await firestoreService.getTodo(uid);
       console.log(doc.data);
       if (doc.success) {
-        dispatch(addTodo({...doc.data}));
+        console.log(doc.data)
+        dispatch(addTodo({ ...doc.data }));
       }
     };
     fetchData();
-  }, [uid]);
+  }, [uid,dispatch]);
   const [error, setError] = useState(null);
   console.log("loads!!");
   const todo = useSelector((state) => state.todo);
@@ -61,23 +69,15 @@ const Todo = () => {
     }
     e.target.reset();
   };
-  const saveHandler = async(data)=>{
-    // e.preventDefault();
-    console.log(data);
-    console.log(todo);
+  const saveHandler = async (data) => {
     dispatch(setNotes(data));
-    console.log(todo);
-    // const task = 
-    const res = await firestoreService.addTask(uid,todo);
-    // console.log(res);
-    if(res.success){
-      window.alert("saved succesfully !!");
-    }
-    console.log(res.data)
-  }
+    dispatch(saveTask(uid));
+  };
   return (
     <div className="mx-4 my-2">
-      <h1 className="text-2xl font-semibold tracking-wide">Here you Go Acheiver:</h1>
+      <h1 className="text-2xl font-semibold tracking-wide">
+        Here you Go Acheiver:
+      </h1>
       <div className="shadow-xl rounded-xl p-4 border">
         <form
           className="flex flex-col md:flex-row justify-start items-start md:items-center gap-4 mx-6 my-2"
@@ -156,7 +156,7 @@ const Todo = () => {
             )}
           </div>
           <div className="flex-1 shadow-2xl rounded-lg border py-2">
-            <TextEditor onclick={saveHandler} data={todo.notes}/>
+            <TextEditor onclick={saveHandler} data={todo.notes} />
           </div>
         </div>
       </section>

@@ -50,7 +50,7 @@ class Firestore {
         return { success: true, data: docSnap.data() };
       }
     } catch (error) {
-      return { success: false, message: error.message };
+      return { success: false, data: error.message };
     }
   }
   async getTasks(uid) {

@@ -30,7 +30,7 @@ const Modal = ({ isOpen, onClose, task }) => {
 
     return (
         <div
-            className="fixed inset-0 flex items-center justify-center bg-gray-300 bg-opacity-50 z-50"
+            className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-70 z-50"
             onClick={onClose}
         >
             <div

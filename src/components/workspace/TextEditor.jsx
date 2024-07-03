@@ -1,10 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
+// import { BiCross } from "react-icons/bi";
+import { RxCross1 } from "react-icons/rx";
+import { TiTick } from "react-icons/ti";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { useSelector } from "react-redux";
 
 const TextEditor = ({ onclick, data }) => {
   const quillRef = useRef(null);
-
+  const state = useSelector(state => state.todo);
+  console.log(state);
   useEffect(() => {
     if (quillRef.current && data) {
       // console.log(data);
@@ -54,12 +59,17 @@ const TextEditor = ({ onclick, data }) => {
         ref={quillRef}
         placeholder="Hey! CHAMP save your highlights for later !!"
       />
+      <div className="flex justify-center items-center">
       <button
         className="border cursor-pointer px-8 py-4 bg-orange-500 text-white rounded-md mx-8 my-4 text-[18px] border-b-4 border-r-4 border-orange-700 transition-transform duration-200 ease-in-out hover:translate-x-1 hover:translate-y-1 hover:border-orange-500"
         onClick={() => onclick(quillRef.current.getEditor().root.innerHTML)}
       >
         save
       </button>
+      {state.loading&&state.error===null ? <p className="p-4 rounded-[50%] border-[5px] border-gray-200 border-t-[5px] border-t-orange-500 spin"></p>:<p></p>}
+      {!state.loading&&state.error===null ? <p className="text-orange-400 text-[35px]"><TiTick /></p> : <p></p>}
+      {!state.loading&&state.error!==null ? <p className="text-red-700 text-[35px]"><RxCross1 /></p> : <p></p>}
+      </div>
     </div>
   );
 };
