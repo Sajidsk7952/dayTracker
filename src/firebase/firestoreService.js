@@ -69,7 +69,7 @@ class Firestore {
       //   console.log(taskArr);
       return taskArr;
     } catch (error) {
-      return error.message;
+      throw new Error("Server Problem!! Try again after some time");
     }
   }
 }

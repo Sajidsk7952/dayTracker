@@ -9,30 +9,40 @@ const Footer = () => {
       <div className="flex items-start justify-around">
         <div className="m-8">
           {/* <img src={logo2} alt="logo" className="w-[100px] h-[100px]" /> */}
-          <h1 className="text-[25px] font-bold text-orange-600">Day Tracker</h1>
-          <p className="hidden sm:block text-[18px] font-normal">Track your daily tasks and make a notes and track them tommorow</p>
-          <p className="hidden sm:block text-[18px] font-normal">your suggestions are most valuable to me as a developer</p>
+          <h1 className="text-[30px] font-bold text-orange-600">Day Tracker</h1>
+          <p className="hidden sm:block text-[20px] font-semibold tracking-wide">
+            Track your daily tasks and make a notes and track them tommorow
+          </p>
+          <p className="hidden sm:block text-[18px] font-normal">
+            your suggestions are most valuable to me as a developer
+          </p>
         </div>
         <div className="">
-          <h1 className="capitalize font-semibold text-[20px] sm:text-[25px]">
+          <h1 className="capitalize font-semibold text-[25px] sm:text-[25px]">
             Drop your suggestions at
           </h1>
-          <div className="flex flex-col items-baseline justify-center gap-2 mt-4">
+          <div className="flex  sm:flex-col items-baseline justify-center gap-2 mt-4">
             <a href="https://github.com/Sajidsk7952" target="blank">
-              <IoLogoGithub className="inline text-[16px] sm:text-[20px] mr-2" />
+              <IoLogoGithub className="inline text-[20px] mr-2" />
               <span className="hidden sm:inline underline text-[16px] sm:text-[18px] text-slate-700">
                 Github
               </span>
             </a>
-            <a href="https://www.linkedin.com/in/sajid-hussain-shaik-185554235/" target="blank">
-              <FaLinkedin className="inline text-[16px] sm:text-[20px] mr-2" />
+            <a
+              href="https://www.linkedin.com/in/sajid-hussain-shaik-185554235/"
+              target="blank"
+            >
+              <FaLinkedin className="inline text-[20px] mr-2" />
               <span className="hidden sm:inline underline text-[16px] sm:text-[18px] text-slate-700">
                 Linded In
               </span>
             </a>
-            <a href="mailto:sksajidhussain2003@gmail.com" target="blank"><IoMail className="inline text-[16px] sm:text-[20px] mr-2" /><span className="hidden sm:inline underline text-[16px] sm:text-[18px] text-slate-700">
+            <a href="mailto:sksajidhussain2003@gmail.com" target="blank">
+              <IoMail className="inline text-[20px] mr-2" />
+              <span className="hidden sm:inline underline text-[16px] sm:text-[18px] text-slate-700">
                 Mail me
-              </span></a>
+              </span>
+            </a>
           </div>
         </div>
       </div>
